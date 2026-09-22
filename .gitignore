@@ -1,0 +1,6 @@
+node_modules/
+records/
+suites/*.jsonl
+.env
+*.log
+.DS_Store

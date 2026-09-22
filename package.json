@@ -1,0 +1,20 @@
+{
+  "name": "stuntdouble",
+  "version": "0.1.0",
+  "description": "Drop-in /v1/systemone proxy that shadows Jev with local decision models (Kev, Laya, anything on the wire shape) and reports whether you can swap.",
+  "type": "module",
+  "bin": { "stuntdouble": "src/cli.mjs" },
+  "files": ["src", "sidecars", "docs", "README.md", "LICENSE"],
+  "engines": { "node": ">=20.17.0" },
+  "scripts": {
+    "start": "node src/cli.mjs",
+    "test": "node --test",
+    "check": "node --test"
+  },
+  "keywords": ["jev", "typesafe-ai", "system-one", "kev", "laya", "typed-decisions", "proxy", "shadow-mode", "evaluation", "ai-agents"],
+  "repository": { "type": "git", "url": "git+https://github.com/ReallyArtificial/stuntdouble.git" },
+  "homepage": "https://github.com/ReallyArtificial/stuntdouble",
+  "bugs": "https://github.com/ReallyArtificial/stuntdouble/issues",
+  "author": "Really Artificial",
+  "license": "MIT"
+}
