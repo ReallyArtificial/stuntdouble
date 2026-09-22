@@ -7,13 +7,15 @@ This is the first report stuntdouble produced, on the machine that built it. It 
 | | |
 | --- | --- |
 | Machine | MacBook Pro, Apple M3 Pro, 18 GB unified memory, macOS 24.6 |
-| Star | [Kev-0.8B](https://huggingface.co/jaredpalmer/kev-0.8b) via `python -m kev.serve --run jaredpalmer/kev-0.8b`, `KEV_DTYPE=bf16`, MPS. Kev-4B was tried first and swapped the machine to a standstill; 18 GB is not enough alongside a normal desktop session. |
+| Star | [Kev-0.8B](https://huggingface.co/jaredpalmer/kev-0.8b) via `python -m kev.serve --run jaredpalmer/kev-0.8b`, `KEV_DTYPE=bf16`, MPS. Kev-4B was tried twice: once it swapped the machine to a standstill during load; the second time, with swap nearly empty, it loaded in 23 s and opened its port, but the first real request hung for 180 s while swap climbed to 13 GB. 18 GB is not enough for the 4B model beside a desktop session. |
 | Double | [Laya](https://huggingface.co/aac6fef/laya-mlx) 421M through [sidecars/laya.py](../../sidecars/laya.py), MLX 0.32.2, Python 3.12 |
 | Jev | Not run. No TypeSafe API key was available on this machine. |
 | stuntdouble | commit at the time of the run, `node src/cli.mjs suite run …`; reports rendered with `--max-disagreement 0.05` |
 | Runner | `suite run` calls star and double concurrently per item, sequentially across items |
 
 Sixteen of the 300 Kev-suite rows and four of the 111 JevBench rows carry a star error and are excluded from every agreement and accuracy figure: the sixteen are Score answers whose two-decimal probabilities made the reported mean drift past the validator's tolerance at the time of the run (the tolerance was widened in the next commit; a rerun was stopped at 290 of 300 to free the machine), the four are 30-second timeouts on long JevBench states with both models loaded.
+
+A 500-row pass of the Kev suite was attempted after the Kev-4B retry and abandoned: with the machine still paging, Kev-0.8B timed out at 30 s on every one of the first five rows and Laya took 3 to 11 s per row, so the 300-row file above remains the committed one. Issue [#1](https://github.com/ReallyArtificial/stuntdouble/issues/1) asks for a run on a machine with headroom and a Jev key.
 
 Latency figures are for this machine with both models loaded at once and other applications running; treat them as indicative only.
 
