@@ -22,6 +22,7 @@ Flags
   --config FILE   JSON config: { listen, star: {name,url,model,headers,pricePerMillionInput}, doubles: [...], records, sampleRate }
   --no-state      Store only the request hash, not the state text
   --double n=u,m  A backend on the /v1/systemone wire shape; repeatable
+  --timeout MS    Per-call timeout for --star/--double backends in suite run and replay (default 30000)
 Config values may reference environment variables as \${NAME}. A .env in the working directory is loaded.`;
 
 function parse(argv) {
@@ -39,12 +40,12 @@ function parse(argv) {
   return { positional, flags };
 }
 
-const backendFlag = (text, fallbackName) => {
+const backendFlag = (text, fallbackName, timeoutMs) => {
   const [head, model] = text.split(',');
   const eq = head.indexOf('=');
   const name = eq === -1 ? fallbackName : head.slice(0, eq), url = eq === -1 ? head : head.slice(eq + 1);
   if (!url) throw new Error(`Bad backend spec: ${text}. Use name=url[,model].`);
-  return { name, url, ...(model ? { model } : {}) };
+  return { name, url, ...(model ? { model } : {}), ...(timeoutMs ? { timeoutMs } : {}) };
 };
 
 async function loadConfig(flags, { required = true } = {}) {
@@ -87,7 +88,7 @@ async function report(positional, flags) {
 async function replay(positional, flags) {
   if (!positional.length || !flags.double?.length) throw new Error('replay needs records files and at least one --double.');
   const records = await readRecords(positional);
-  const doubles = flags.double.map((d, i) => createBackend(backendFlag(d, `double${i + 1}`)));
+  const doubles = flags.double.map((d, i) => createBackend(backendFlag(d, `double${i + 1}`, Number(flags.timeout) || 0)));
   const out = flags.out ?? `records/replay-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.jsonl`;
   const lines = [];
   let done = 0;
@@ -118,9 +119,10 @@ async function suiteRun(positional, flags) {
   const [source] = positional;
   if (!source) throw new Error('suite run needs a suite file or jbe:<path>.');
   const config = await loadConfig(flags, { required: false });
-  const starSpec = flags.star ? backendFlag(flags.star, 'star') : config?.star;
+  const timeoutMs = Number(flags.timeout) || 0;
+  const starSpec = flags.star ? backendFlag(flags.star, 'star', timeoutMs) : config?.star;
   if (!starSpec) throw new Error('Pass --star name=url or a config with star.');
-  const doubleSpecs = flags.double?.length ? flags.double.map((d, i) => backendFlag(d, `double${i + 1}`)) : config?.doubles ?? [];
+  const doubleSpecs = flags.double?.length ? flags.double.map((d, i) => backendFlag(d, `double${i + 1}`, timeoutMs)) : config?.doubles ?? [];
   const star = createBackend(starSpec), doubles = doubleSpecs.map(s => createBackend(s));
   let items = source.startsWith('jbe:') ? await IMPORTERS.jbe(source.slice(4)) : await loadSuite(source);
   if (flags.sample && Number(flags.sample) > 1) items = sample(items, Number(flags.sample));
