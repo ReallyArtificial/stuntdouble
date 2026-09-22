@@ -103,6 +103,12 @@ Kev, jeff, djev, and TypeSafe itself speak the wire shape and need nothing. Laya
 pip install laya-mlx && python sidecars/laya.py --port 8011
 ```
 
+For machines that cannot hold Kev-4B, [sidecars/kev-space.mjs](sidecars/kev-space.mjs) puts the [Kev Hugging Face Space](https://huggingface.co/spaces/jaredpalmer/kev) behind the same endpoint (Node only, needs a Hugging Face login for ZeroGPU queue priority; free accounts have a small daily quota):
+
+```sh
+node sidecars/kev-space.mjs --port 8012 --model Kev-4B
+```
+
 SemIf ships a batch scorer rather than a server; a sidecar for it is [issue #2](https://github.com/ReallyArtificial/stuntdouble/issues/2).
 
 ## Records and privacy
@@ -115,7 +121,7 @@ Each request produces one JSON line in `records/<utc-date>.jsonl`: the request (
 - Every backend receives the identical body, so all see the same option order. Option-order sensitivity is real ([JevBench](https://github.com/fstandhartinger/jevbench) measures it) and not covered here.
 - Latency includes network time for hosted backends and is specific to the machine that ran the proxy.
 - Backends round probabilities differently; the validator allows drift proportional to the option count, and Score is compared both rounded and within ±0.5 level.
-- The launch report used Kev-0.8B, not Kev-4B or Jev. See above.
+- The launch report used Kev-0.8B, not Kev-4B or Jev. Kev-4B was attempted locally (swapped) and through the Space (quota ran out after six records); both attempts are described in the report README.
 
 ## Contributing
 

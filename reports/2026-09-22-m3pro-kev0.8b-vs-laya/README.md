@@ -17,6 +17,8 @@ Sixteen of the 300 Kev-suite rows and four of the 111 JevBench rows carry a star
 
 A 500-row pass of the Kev suite was attempted after the Kev-4B retry and abandoned: with the machine still paging, Kev-0.8B timed out at 30 s on every one of the first five rows and Laya took 3 to 11 s per row, so the 300-row file above remains the committed one. Issue [#1](https://github.com/ReallyArtificial/stuntdouble/issues/1) asks for a run on a machine with headroom and a Jev key.
 
+**Kev-4B through the Hugging Face Space (partial).** A third route was tried with [sidecars/kev-space.mjs](../../sidecars/kev-space.mjs), which puts the Kev Space (Kev-4B on ZeroGPU, fp32, calibrated) behind the wire endpoint. It answered in 3 to 60 s per call with a free Hugging Face login, then the account's ZeroGPU quota ran out 6 records into the jev-by-example suite; the remaining 22, and the two other suites, returned the Space's quota error. The six valid records are kept as `records/kev-4b-space-partial-jev-by-example.jsonl`: Kev-4B and Laya made the same application decision on 5 of the 6 cases (they split on 02/permanent-correction, where Kev-4B proposed the replacement and Laya asked for review), and Kev-4B matched the authored intended outcome on 4 of 6. Six rows are not a result; they are a demonstration that the route works for anyone with quota, which a PRO account has 40 minutes of per day.
+
 Latency figures are for this machine with both models loaded at once and other applications running; treat them as indicative only.
 
 ## Files
