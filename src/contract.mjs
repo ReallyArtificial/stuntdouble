@@ -48,7 +48,8 @@ export function validateResponse(response, questions) {
     } else {
       assert(typeof a.score === 'number' && Number.isFinite(a.score) && a.score >= -0.01 && a.score <= keys.length - 1 + 0.01, `${id}: invalid score`);
       const mean = keys.reduce((total, key) => total + Number(key) * a.probabilities[key], 0);
-      assert(Math.abs(a.score - mean) <= 0.02, `${id}: score inconsistent with distribution`);
+      // Rounded per-level probabilities shift the mean by up to 0.005 × Σ level index.
+      assert(Math.abs(a.score - mean) <= 0.02 + 0.005 * keys.length * (keys.length - 1) / 2, `${id}: score inconsistent with distribution`);
     }
   }
   return response;

@@ -1,0 +1,305 @@
+{
+  "generatedAt": "2026-09-22T14:34:33.980Z",
+  "records": 28,
+  "labeled": 0,
+  "replays": 0,
+  "firstRecord": "2026-09-22T14:18:45.217Z",
+  "lastRecord": "2026-09-22T14:19:07.372Z",
+  "settings": {
+    "maxDisagreement": 0.05,
+    "minRows": 10,
+    "noulThreshold": 0.5,
+    "scoreToleranceLevels": 0.5,
+    "budget": 0.05
+  },
+  "star": {
+    "name": "kev-0.8b",
+    "models": [
+      "kev-latest"
+    ],
+    "latency": {
+      "n": 28,
+      "p50": 315,
+      "p95": 1647,
+      "mean": 503.17857142857144
+    },
+    "cost": {
+      "n": 0,
+      "usdPer1000": null,
+      "priced": 0
+    },
+    "errors": 0,
+    "accuracy": null,
+    "brier": null,
+    "ece": null,
+    "coverageAtError": null
+  },
+  "doubles": {
+    "laya": {
+      "models": [
+        "laya:laya-mlx"
+      ],
+      "availability": {
+        "n": 28,
+        "available": 1
+      },
+      "latency": {
+        "n": 28,
+        "p50": 398,
+        "p95": 1595,
+        "mean": 687.5357142857143
+      },
+      "cost": {
+        "n": 0,
+        "usdPer1000": null,
+        "priced": 0
+      },
+      "agreement": {
+        "n": 55,
+        "agreement": 0.7818181818181819
+      },
+      "agreementByType": {
+        "noul": {
+          "n": 31,
+          "agreement": 0.8064516129032258
+        },
+        "choice": {
+          "n": 12,
+          "agreement": 0.8333333333333334
+        },
+        "score": {
+          "n": 12,
+          "agreement": 0.6666666666666666
+        }
+      },
+      "score": {
+        "n": 12,
+        "withinTolerance": 1,
+        "meanAbsoluteDifference": 0.10303333333333338
+      },
+      "gated": [
+        {
+          "threshold": 0.5,
+          "n": 37,
+          "coverage": 0.6727272727272727,
+          "agreement": 0.8378378378378378
+        },
+        {
+          "threshold": 0.6,
+          "n": 36,
+          "coverage": 0.6545454545454545,
+          "agreement": 0.8333333333333334
+        },
+        {
+          "threshold": 0.7,
+          "n": 30,
+          "coverage": 0.5454545454545454,
+          "agreement": 0.8333333333333334
+        },
+        {
+          "threshold": 0.8,
+          "n": 20,
+          "coverage": 0.36363636363636365,
+          "agreement": 0.9
+        },
+        {
+          "threshold": 0.85,
+          "n": 18,
+          "coverage": 0.32727272727272727,
+          "agreement": 0.8888888888888888
+        },
+        {
+          "threshold": 0.9,
+          "n": 7,
+          "coverage": 0.12727272727272726,
+          "agreement": 1
+        },
+        {
+          "threshold": 0.95,
+          "n": 4,
+          "coverage": 0.07272727272727272,
+          "agreement": 1
+        }
+      ],
+      "accuracy": {
+        "n": 0,
+        "accuracy": null
+      },
+      "brier": {
+        "n": 0,
+        "brier": null
+      },
+      "ece": {
+        "n": 0,
+        "ece": null
+      },
+      "coverageAtError": {
+        "n": 0,
+        "budget": 0.05,
+        "coverage": null
+      },
+      "policy": {
+        "n": 28,
+        "agreement": 0.7857142857142857,
+        "disagreements": [
+          {
+            "id": "e4c22662-0941-415d-ac53-f82a8cbff551",
+            "case": "06-retry-or-reconcile/read-unavailable",
+            "star": "inspect",
+            "double": "retry-with-backoff"
+          },
+          {
+            "id": "f3692e7a-fc04-434b-9d22-ea9fbdb23861",
+            "case": "08-handoff-readiness/faithful-paraphrase",
+            "star": "repair-handoff",
+            "double": "handoff-candidate"
+          },
+          {
+            "id": "8cef83ff-2066-4b06-899a-229d6332f922",
+            "case": "10-question-stress-test/original",
+            "star": "local-draft",
+            "double": "clarify"
+          },
+          {
+            "id": "b719743b-7272-409d-8e98-1c2e081cf136",
+            "case": "10-question-stress-test/reordered-options",
+            "star": "local-draft",
+            "double": "clarify"
+          },
+          {
+            "id": "a7529d26-bfe2-4f11-a69e-d67018862eed",
+            "case": "10-question-stress-test/paraphrased-question",
+            "star": "local-draft",
+            "double": "clarify"
+          },
+          {
+            "id": "7d6bde9b-0120-44f0-8a9d-8bdd8560822c",
+            "case": "10-question-stress-test/changed-evidence",
+            "star": "publication-review",
+            "double": "clarify"
+          }
+        ]
+      },
+      "verdict": {
+        "qualifies": false,
+        "maxDisagreement": 0.05,
+        "minRows": 10,
+        "threshold": null,
+        "coverage": null,
+        "disagreement": null,
+        "n": null,
+        "savingsUsdPer1000": null
+      },
+      "disagreements": [
+        {
+          "id": "0def897d-042b-41d6-8c37-30556e0079ab",
+          "qid": "within_request",
+          "type": "noul",
+          "star": "no",
+          "double": "yes",
+          "doubleConfidence": 0.7453,
+          "label": null
+        },
+        {
+          "id": "e83d9419-f90e-436b-9ee3-640c14d6c805",
+          "qid": "changes_external_state",
+          "type": "noul",
+          "star": "no",
+          "double": "yes",
+          "doubleConfidence": 0.7356,
+          "label": null
+        },
+        {
+          "id": "f3beaf16-30c9-4eb4-a84d-fd7acbea211a",
+          "qid": "interchangeable",
+          "type": "noul",
+          "star": "no",
+          "double": "yes",
+          "doubleConfidence": 0.6878,
+          "label": null
+        },
+        {
+          "id": "6df8f94b-d158-4b7a-a64e-bfbe9bc5e20c",
+          "qid": "matches_scope",
+          "type": "noul",
+          "star": "yes",
+          "double": "no",
+          "doubleConfidence": 0.8748,
+          "label": null
+        },
+        {
+          "id": "7f5c86f0-8189-4ef9-af95-9cd59df6cde2",
+          "qid": "satisfies",
+          "type": "noul",
+          "star": "yes",
+          "double": "no",
+          "doubleConfidence": 0.7554,
+          "label": null
+        },
+        {
+          "id": "7f5c86f0-8189-4ef9-af95-9cd59df6cde2",
+          "qid": "matches_scope",
+          "type": "noul",
+          "star": "yes",
+          "double": "no",
+          "doubleConfidence": 0.8706,
+          "label": null
+        },
+        {
+          "id": "63b6e61c-3acd-4e67-9534-c672346a0e96",
+          "qid": "cause",
+          "type": "choice",
+          "star": "repair",
+          "double": "unknown",
+          "doubleConfidence": 0.1561,
+          "label": null
+        },
+        {
+          "id": "d32c4719-f66d-475a-a1d3-6af64b3c9c34",
+          "qid": "novelty_1",
+          "type": "score",
+          "star": "1",
+          "double": "2",
+          "doubleConfidence": 0.2034,
+          "label": null
+        },
+        {
+          "id": "d32c4719-f66d-475a-a1d3-6af64b3c9c34",
+          "qid": "novelty_2",
+          "type": "score",
+          "star": "1",
+          "double": "2",
+          "doubleConfidence": 0.228,
+          "label": null
+        },
+        {
+          "id": "b9b9ba48-edb1-4e45-8e06-1af58d92c9dd",
+          "qid": "novelty_1",
+          "type": "score",
+          "star": "1",
+          "double": "2",
+          "doubleConfidence": 0.2034,
+          "label": null
+        },
+        {
+          "id": "b9b9ba48-edb1-4e45-8e06-1af58d92c9dd",
+          "qid": "novelty_2",
+          "type": "score",
+          "star": "1",
+          "double": "2",
+          "doubleConfidence": 0.228,
+          "label": null
+        },
+        {
+          "id": "dd8d0f23-87f9-4317-ba3e-9b6ba0feb2f9",
+          "qid": "relationship",
+          "type": "choice",
+          "star": "shared_cause",
+          "double": "shared_symptom",
+          "doubleConfidence": 0.2609,
+          "label": null
+        }
+      ]
+    }
+  }
+}
