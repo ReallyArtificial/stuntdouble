@@ -39,7 +39,8 @@ export function validateResponse(response, questions) {
     assert(object(a.probabilities) && sameKeys(Object.keys(a.probabilities), keys), `${id}: probability keys mismatch`);
     assert(Object.values(a.probabilities).every(unit), `${id}: invalid probability`);
     const sum = Object.values(a.probabilities).reduce((x, y) => x + y, 0);
-    assert(Math.abs(sum - 1) <= 0.02, `${id}: probabilities must sum to one`);
+    // Backends round each probability (Kev to two decimals), so the allowed drift grows with the option count.
+    assert(Math.abs(sum - 1) <= 0.01 + 0.005 * keys.length, `${id}: probabilities must sum to one`);
     if (a.confidence !== undefined) assert(unit(a.confidence), `${id}: invalid confidence`);
     if (q.type === 'choice') {
       assert(keys.includes(a.choice), `${id}: unknown choice`);
