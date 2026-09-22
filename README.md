@@ -86,7 +86,14 @@ Run on an M3 Pro with 18 GB, which could not hold Kev-4B (it swapped), so the st
 
 **jev-by-example, 28 cases that reach the model, 55 questions.** Policy agreement between Kev-0.8B and Laya was **78.6%**: on 6 of 28 cases the application would have done something different. Label agreement was 78.2%, and it did not rise reliably with Laya's confidence (83.8% at ≥0.5, 90.0% at ≥0.8, 100% only above 0.9 on 7 rows), so the verdict at a 5% budget was **do not route**. The six policy flips were in retry-or-reconcile (Kev inspects, Laya retries), handoff readiness (Kev repairs, Laya ships), and all four question-stress-test variants (Kev drafts locally, Laya asks to clarify).
 
-The other two suites are labeled, so the report also says who was right; their tables are in the sections below and in `reports/`.
+The other two suites are labeled, so the report also says who was right.
+
+| Suite | Rows | Agreement Laya vs Kev-0.8B | Accuracy Kev-0.8B | Accuracy Laya | Brier Kev / Laya | Coverage at ≤5% error Kev / Laya | p50 Kev / Laya |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Kev `decision-v2` test, 300 rows sampled | 348 questions | 65.5% (Noul 81.7%, Choice 60.9%, Score 40.9%) | 87.6% | 65.8% | 0.200 / 0.512 | 65.8% / 0.0% | 220 ms / 338 ms |
+| JevBench public hard, all 111 | 107 questions | 41.1% | 35.5% | 38.3% | 0.782 / 0.797 | 0.0% / 0.0% | 1073 ms / 342 ms |
+
+Kev's own suite is in-distribution for Kev, which explains the gap. On JevBench's hard tier both models sit near chance on 5-way items and neither could automate anything at a 5% error budget; JevBench reports Jev at 74 on its composite score, so the tier is simply beyond 0.4B and 0.8B models. The verdict on every suite was **do not route** at a 5% budget. Sixteen Kev-suite rows and four JevBench rows were excluded as star errors; the report README says which and why.
 
 ## Sidecars
 
