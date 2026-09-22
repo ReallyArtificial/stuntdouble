@@ -2,21 +2,23 @@
 Last touched: 2026-09-22
 
 ## Now
-- v0.1.0 built: proxy, backends, recorder, compare, verdict, report, suites (kev, jevbench, semif, jbe), CLI, Laya sidecar. 30 tests pass.
-- Real flow verified: official @typesafe-ai/sdk with baseURL → proxy → Kev-0.8B (star) + Laya (double) → record.
-- Launch report runs in progress: jev-by-example (28 cases), Kev decision-v2 test sample (300), JevBench hard (111).
+- v0.1.0 live at https://github.com/ReallyArtificial/stuntdouble, CI green on Node 20/22, 33 tests.
+- Launch report committed under `reports/2026-09-22-m3pro-kev0.8b-vs-laya/` (Kev-0.8B star, Laya double, no Jev). Numbers in README.
+- Outreach open: Kev PR #36, laya-mlx PR #9, SemIf PR #30, JevBench issue #32, 8 awesome-jev directory issues, jev-by-example issue #8 comment.
 
 ## Next
-- Rerun the launch report with Jev as the star once a TYPESAFE_API_KEY exists (config: star.url https://api.typesafe.ai, pricePerMillionInput 0.042).
-- Kev-4B as a double needs a machine with more than 18 GB; this Mac swapped to death on it. Kev-0.8B was used instead.
-- SemIf sidecar (issue #2), djev/classifier.dev importers, --redact regex.
-- npm publish blocked: `npm whoami` returns E401. Log in and run `npm publish`.
+- `npm publish` (blocked: `npm whoami` E401; log in first). The README already says `npx stuntdouble`.
+- Post Show HN and the X thread from `../stuntdouble-launch-posts.md`.
+- Rerun the launch report with Jev as the star once a TYPESAFE_API_KEY exists (issue #1); under $2.
+- Watch the three upstream PRs and the logicrw auto-ingest of issue #70; answer maintainer questions.
+- v0.2: SemIf sidecar (#2), --redact (#3), hosted backends doc (#4), CSV rows (#5), Windows CI (#6).
 
 ## Blockers / Open questions
-- No TypeSafe API key on this machine, so the star in the launch report is Kev-0.8B, not Jev.
-- Disk was at 100% during the build (HF caches). `uv cache clean` freed 5 GB. Run /cleanup-mac-storage.
+- No TypeSafe key on this machine; Jev never ran through the proxy.
+- Kev-4B does not fit on the 18 GB M3 Pro beside a desktop session (swap thrash). Kev-0.8B works.
+- Machine memory and disk were near full during the build; the final Kev rerun was stopped at 290/300, so the committed Kev-suite report has 16 excluded star rows (documented in the report README).
 
 ## Decisions
-- 2026-09-22: Name stuntdouble. State stored verbatim by default, `--no-state` hashes it.
-- 2026-09-22: Doubles are called concurrently with the star; the reply never waits for them (test enforces < 300 ms with a 400 ms double).
-- 2026-09-22: Contract validation is lenient on usage (optional) so sidecars without tokenizers still count as valid.
+- 2026-09-22: Name stuntdouble; state verbatim by default with `--no-state`; doubles run concurrently with the star and never delay the reply.
+- 2026-09-22: Validator tolerances scale with option/level count because Kev rounds probabilities to two decimals.
+- 2026-09-22: Launch report published with two local models rather than waiting for a Jev key; README leads with that caveat.
